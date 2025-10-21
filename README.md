@@ -1,61 +1,114 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Web3 Wallet Verification
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+- [Requirement](#requirement)
+- [✅ Project Setup Instructions](#-project-setup-instructions)
+- [Challenges and Solutions](#challenges-and-solutions)
+- [Workflow Overview](#workflow-overview)
 
-## About Laravel
+## Requirement
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   PHP version: 8.2
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✅ Project Setup Instructions
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Clone the repository
 
-## Learning Laravel
+For Local Machine:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```sh
+git clone https://github.com/Mirza-Md-Golam-Nabi/Web3-Wallet-Verification.git
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Goto project folder
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```sh
+cd Web3-Wallet-Verification
+```
 
-## Laravel Sponsors
+3. Install dependencies using Composer
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+First, you check GMP extension is enable or not.
 
-### Premium Partners
+```sh
+php -m | grep gmp
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- If the output displays the text **gmp**, the extension is already enabled and no further action is needed.
+- If the command returns no output, the GMP extension is not currently enabled. Please proceed to Step 2.
+- Locate and open your **php.ini** configuration file.
+- Within the file, search for the line containing **extension=gmp**.
+- If this line is prefixed with a semicolon (;), it is commented out. Remove the semicolon to uncomment and activate the line.
+  - Before: ;extension=gmp
+  - After: extension=gmp
+- Save the **php.ini** file.
 
-## Contributing
+**N.B.** Restart your web server (e.g., Apache, Nginx) and any related services (e.g., Laragon, XAMPP) for the changes to take effect.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Now run this composer command:
 
-## Code of Conduct
+```sh
+composer install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. Create the **.env** file
 
-## Security Vulnerabilities
+Copy the example environment file:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```sh
+cp .env.example .env
+```
 
-## License
+5. Run this command:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```sh
+php artisan key:generate
+```
+
+6. Create the database
+
+Create a database named:
+
+```sh
+block_chain
+```
+
+7. Run migrations and seeders
+
+Run the following command to migrate and seed the database:
+
+```sh
+php artisan migrate:fresh
+```
+
+8. Run the application
+
+```sh
+npm install && npm run build
+```
+
+and
+
+```sh
+php artisan serve
+```
+
+## Challenges and Solutions
+
+Since **MetaMask Wallet** was completely new to me, I initially faced some challenges understanding its documentation. After installing the **MetaMask** browser extension and completing the registration process, I encountered difficulties logging into the wallet and connecting it properly.
+
+To resolve these issues, I sought help from **YouTube** tutorials, which guided me through the process. After several attempts and some practice, I was finally able to fix the problem and connect the wallet successfully.
+
+Throughout the development of this project, I took reference and guidance from:
+
+- MetaMask official documentation
+- DeepSeek AI, and
+- A technical blog page
+
+## Workflow Overview
+
+At first, the user connects to the MetaMask wallet by clicking the “**Connect Wallet**” button. Once connected, MetaMask provides the user’s **wallet address**, which can also be used to retrieve the **wallet’s balance**. This process is illustrated in **Step 2: Wallet Connected**.
+
+Next, the “**Sign Message**” button is used to verify the ownership of the connected wallet. When MetaMask returns a successful response, the verification result is displayed in **Step 4**.
+
+If the wallet is not connected, Step 3 (signing functionality) remains disabled.
+Finally, a **Reset** button is provided to clear the session and start the process again.
